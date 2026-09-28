@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your First Kanji</title>
-<link href="https://fonts.googleapis.com/css2?family=Klee+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&display=swap" rel="stylesheet">
+<!-- Zen Maru Gothic for Latin letters only; Japanese falls through to Klee One (き・さ written with separate strokes) -->
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&text=%20%21%22%23%24%25%26%27%28%29%2A%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D~%E2%80%93%E2%80%94%E2%80%98%E2%80%99%E2%80%9C%E2%80%9D%C2%B7%E2%80%B9%E2%80%BA%E2%80%A6%E2%9C%93%E2%97%8B%C3%97%E2%98%B0&display=swap" rel="stylesheet">
 <style>
   * { box-sizing:border-box; margin:0; padding:0; }
   body { min-height:100vh; background:#f7f3ee; font-family:'Klee One','Yu Mincho',serif; padding:20px; }
@@ -48,6 +50,42 @@
   .kanji-tile:hover { transform:scale(1.05); }
 
   rt { font-size:0.5em; color:#aaa; font-family:'Klee One',serif; }
+
+/* ===== Sky theme (matches もじクイズ) ===== */
+:root{
+  --sky1:#BFD7F2; --sky2:#E6DAF2; --sky3:#FBE4D8;
+  --ink:#2E3A59; --ink-soft:#5B6485;
+  --glass:rgba(255,255,255,.55); --glass-strong:rgba(255,255,255,.75); --edge:rgba(255,255,255,.85);
+  --shadow:0 18px 40px rgba(80,90,150,.16);
+  --ui:"Zen Maru Gothic","Klee One","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
+  --text:#2E3A59;
+}
+html{background:var(--sky1)}
+body{background:transparent !important;color:var(--ink);font-synthesis:none;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 55%,var(--sky3) 100%)}
+body, body *:not(svg):not(path):not(line):not(rect){font-family:var(--ui) !important}
+.glass{background:var(--glass);border:1px solid var(--edge);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+
+.header h1{color:var(--ink);font-size:28px;letter-spacing:.06em}
+.subtitle{color:var(--ink-soft)}
+.chapter-btn{border-radius:999px;padding:7px 14px;border-width:1.5px;box-shadow:0 4px 12px rgba(80,90,150,.1)}
+.chapter-title{color:var(--ink)}
+.flip-front,.flip-back{border-radius:30px;box-shadow:var(--shadow)}
+.flip-front{background:linear-gradient(150deg,rgba(255,255,255,.9),rgba(255,255,255,.55) 60%,rgba(255,255,255,.75)) !important;border-width:2px !important;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.flip-back{overflow:hidden}
+.flip-back::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(circle at 20% 10%,rgba(255,255,255,.45),transparent 55%),linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,0) 60%)}
+.flip-back>*{position:relative}
+.sentence-display{color:var(--ink)}
+.flip-hint{color:var(--ink-soft);opacity:.7}
+.pill{background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4)}
+.nav-btn{box-shadow:0 8px 18px rgba(80,90,150,.2)}
+.progress-text{color:var(--ink-soft)}
+.dot{background:rgba(255,255,255,.8)}
+.toggle-btn{border-radius:999px !important;padding:8px 20px;background:var(--glass) !important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.kanji-tile{border-radius:16px;border-width:1.5px}
+rt{color:var(--ink-soft)}
 </style>
 </head>
 <body>
@@ -244,7 +282,7 @@ function render() {
   document.getElementById("progressText").textContent = `${currentIndex+1} / ${total}`;
   document.getElementById("dots").innerHTML = ch.cards.map((c,i) =>
     `<div class="dot${i===currentIndex?' active':''}"
-      style="${i===currentIndex?'background:'+color+';width:18px':'background:#ddd'}"
+      style="${i===currentIndex?'background:'+color+';width:18px':'background:rgba(255,255,255,.85)'}"
       onclick="jumpTo(${i})"></div>`).join("");
 
   const btn = document.getElementById("toggleBtn");
